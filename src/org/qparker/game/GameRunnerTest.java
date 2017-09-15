@@ -2,10 +2,12 @@ package org.qparker.game;
 
 import static org.junit.Assert.*;
 
+import java.util.Random;
 import java.util.Scanner;
 
 import org.junit.Test;
 import org.qparker.game.GameRunner.Moves;
+import org.qparker.game.GameRunner.State;
 
 public class GameRunnerTest {
 
@@ -38,21 +40,15 @@ public class GameRunnerTest {
 
 	@Test
 	public void userTest() {
-		Scanner scan = new Scanner(System.in);
+		Random rand = new Random();
 		GameRunner gameRunner = new GameRunner();
 		gameRunner.startGame();
 		gameRunner.printBoard();
 		
-		for(int i = 0; i < 10 ; i++) {
-			System.out.print("Left(0), Right(1), Up(2), Down(3): ");
-			int input = scan.nextInt();
-			scan.nextLine();
-			
-			Moves move = Moves.values()[input];
+		while(gameRunner.getState() == State.running) {
+			Moves move = Moves.values()[rand.nextInt(3)];
 			gameRunner.makeMove(move);
 			gameRunner.printBoard();
 		}
-		
-		scan.close();
 	}
 }

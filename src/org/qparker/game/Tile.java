@@ -29,11 +29,11 @@ public class Tile {
 		return !combined && tile != null && !tile.getCombined() && this.value == tile.getValue();
 	}
 	
-	public void combineWith (Tile tile) {
+	public int combineWith (Tile tile) {
 		if (canCombineWith(tile)) {
 			this.value *= 2;
 			this.combined = true;
 		}
-		
+		return this.value;
 	}
 }

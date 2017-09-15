@@ -6,6 +6,7 @@ public class Board {
 	
 	private Tile[][] gameBoard;
 	private Random rand;
+	private int highestTile;
 	private static final int BOARDSIZE = 4;
 	
 	public Board() {
@@ -13,7 +14,15 @@ public class Board {
 		gameBoard = new Tile[BOARDSIZE][BOARDSIZE];
 	}
 	
-	public boolean spawnTile() {
+	public void setHighest(int highest) {
+		this.highestTile = highest;
+	}
+	
+	public int getHighest() {
+		return highestTile;
+	}
+	
+	public void spawnTile() {
 		Tile tile;
 		boolean spawned = false;
 		if (rand.nextInt(10) == 1) 
@@ -34,7 +43,16 @@ public class Board {
 				y = rand.nextInt(BOARDSIZE);
 			}	
 		}
-		return spawned;
+	}
+	
+	public boolean isFull() {
+		for (int i = 0; i < BOARDSIZE; i++) {
+			for (int j = 0; j < BOARDSIZE; j++) {
+				if(emptySpot(i, j))
+					return false;
+			}
+		}
+		return true;
 	}
 	
 	private boolean emptySpot(int x, int y) {
@@ -70,7 +88,10 @@ public class Board {
 					moved = true;
 					
 				} else if (cur.canCombineWith(next)) {
-					next.combineWith(cur);
+					int value = next.combineWith(cur);
+					if(value > getHighest()) {
+						setHighest(value);
+					}
 					gameBoard[x][y] = null;
 					moved = true;
 					break;

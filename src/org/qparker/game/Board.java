@@ -132,17 +132,17 @@ public class Board {
 	
 	@Override
 	public String toString() {
-		String board = "";
+		StringBuilder board = new StringBuilder();
 		for (int i = 0; i < BOARDSIZE; i++) {
 			for (int j = 0; j < BOARDSIZE; j++) {
 				if (gameBoard[i][j] == null)
-					board += "[-]";
+					board.append("[-]");
 				else
-					board += "[" + gameBoard[i][j].getValue() + "]";
+					board.append("[" + gameBoard[i][j].getValue() + "]");
 			}
-			board += "\n";
+			board.append("\n");
 		}
 		
-		return board;
+		return board.toString();
 	}
 }
